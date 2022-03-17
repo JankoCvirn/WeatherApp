@@ -1,6 +1,7 @@
 package com.cvirn.weathercvirn.repository
 
 import com.cvirn.weathercvirn.client.APIClient
+import com.cvirn.weathercvirn.model.CityQuery
 import com.cvirn.weathercvirn.model.CurrentLocation
 import com.cvirn.weathercvirn.model.WeatherForecast
 import com.cvirn.weathercvirn.response.WeatherResponse
@@ -28,4 +29,22 @@ class WeatherRepository {
             )
         }
     }
+
+    suspend fun getCityWeatherForecast(cityQuery: CityQuery): WeatherForecast {
+        val result = apiServices.requestCityWeatherForecast(
+            cityName = cityQuery.city,
+            appId = cityQuery.appId,
+            units = cityQuery.units
+        )
+
+        return if (result.isSuccessful && result.body() != null) {
+            mapWeatherResponse(result.body() as WeatherResponse)
+        } else {
+            WeatherForecast(
+                locationForecast = null,
+                isSuccess = false
+            )
+        }
+    }
+
 }

@@ -16,4 +16,12 @@ interface APIServices {
         @Query("appid") appId: String,
         @Query("units") units: String
     ): Response<WeatherResponse>
+
+    @Headers("Accept: application/json")
+    @GET("/data/2.5/weather")
+    suspend fun requestCityWeatherForecast(
+        @Query("q") cityName: String,
+        @Query("appid") appId: String,
+        @Query("units") units: String
+    ): Response<WeatherResponse>
 }

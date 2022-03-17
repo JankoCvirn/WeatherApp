@@ -7,12 +7,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.cvirn.weathercvirn.BuildConfig
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.ActivityMainBinding
 import com.cvirn.weathercvirn.utils.allPermissionsGranted
 import com.cvirn.weathercvirn.utils.requestPermissions
 import com.cvirn.weathercvirn.viewmodel.MainViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -26,9 +31,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.forecastObservable.observe(this) {
-            val test = it.getContentIfNotHandled()
-        }
+        val navView: BottomNavigationView = binding.navView
+
+        supportActionBar?.hide()
+
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_city,
+                R.id.navigation_city_forecast
+            )
+        )
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 
     override fun onResume() {
@@ -37,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun permissionsCheck() {
+        //TODO check if location is turned on
         if (this.allPermissionsGranted()) {
             viewModel.getLastLocation(units = "metric")
         } else {
@@ -75,7 +93,6 @@ class MainActivity : AppCompatActivity() {
 
                 grantResults[0] == PackageManager.PERMISSION_GRANTED ->
                     Timber.d("Permission granted")
-
                 else -> {
 
                     Snackbar.make(

@@ -117,8 +117,12 @@ dependencies {
     //Rounded Image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //Glide
+    /*//Glide
     implementation "com.github.bumptech.glide:glide:4.11.0"
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'*/
+
+    //Coil
+    implementation("io.coil-kt:coil:2.0.0-rc01")
 
     //Ticker
     implementation 'com.robinhood.ticker:ticker:2.0.4'

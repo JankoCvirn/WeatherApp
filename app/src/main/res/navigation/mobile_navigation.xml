@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.cvirn.weathercvirn.view.LocationWeatherFragment"
+        android:label="@string/nav_home"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        tools:layout="@layout/location_weather_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_city"
+        android:name="com.cvirn.weathercvirn.view.CityWeatherFragment"
+        android:label="@string/nav_city"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        tools:layout="@layout/city_weather_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_city_forecast"
+        android:name="com.cvirn.weathercvirn.view.CityForecastFragment"
+        android:label="@string/nav_city_forecast"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        tools:layout="@layout/city_forecast_fragment" />
+
+</navigation>
