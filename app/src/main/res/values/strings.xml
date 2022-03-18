@@ -17,4 +17,6 @@
     <string name="daily_forecast_placeholder">Daily forecast for : %1$s!</string>
     <string name="generic_error_message">Ooops there has been an error!</string>
     <string name="city_not_found_error">City not found!Please try again.</string>
+    <string name="channel_name">Weather Alert</string>
+    <string name="channel_description">Alert for bad weather</string>
 </resources>

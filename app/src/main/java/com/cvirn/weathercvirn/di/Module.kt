@@ -1,6 +1,7 @@
 package com.cvirn.weathercvirn.di
 
 import com.cvirn.weathercvirn.repository.LocationRepository
+import com.cvirn.weathercvirn.repository.NotificationRepository
 import com.cvirn.weathercvirn.repository.WeatherRepository
 import com.cvirn.weathercvirn.viewmodel.MainViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,6 +15,7 @@ val appModule = module {
 
     single { WeatherRepository() }
     single { LocationRepository(androidApplication().applicationContext) }
+    single { NotificationRepository(androidApplication().applicationContext) }
 
     viewModel { MainViewModel(get(), get()) }
 }

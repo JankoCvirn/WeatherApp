@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import coil.load
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.LocationWeatherFragmentBinding
+import com.cvirn.weathercvirn.utils.getTimestampId
 import com.cvirn.weathercvirn.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -30,6 +33,7 @@ class LocationWeatherFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
     }
+
 
     private fun observeViewModel() {
         viewModel.progressObservable.observe(viewLifecycleOwner) {
@@ -55,8 +59,6 @@ class LocationWeatherFragment : Fragment() {
                 it.peekContent().locationForecast?.main?.humidity.toString(),
                 it.peekContent().locationForecast?.wind?.speed.toString()
             )
-
         }
     }
 }
-

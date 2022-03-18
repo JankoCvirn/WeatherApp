@@ -22,6 +22,7 @@ android {
         debug {
             buildConfigField "String", "BASE_URL", "\"https://api.openweathermap.org\""
             buildConfigField "String", "API_KEY", "\"befc2ae04c280e5d3b798259c1003c76\""
+            buildConfigField "String", "CHANNEL_ID" , "\"10000id\""
         }
         release {
             minifyEnabled false

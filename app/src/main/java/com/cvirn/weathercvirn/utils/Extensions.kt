@@ -55,3 +55,7 @@ fun Int.getDate(): String {
 fun Int.isBadWeather(): Boolean {
     return this < 800
 }
+
+fun getTimestampId() : Long {
+    return System.currentTimeMillis() / 1000
+}

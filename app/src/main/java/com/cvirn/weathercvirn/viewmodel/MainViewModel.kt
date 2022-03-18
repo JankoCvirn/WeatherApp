@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.cvirn.weathercvirn.BuildConfig
 import com.cvirn.weathercvirn.model.*
 import com.cvirn.weathercvirn.repository.LocationRepository
+import com.cvirn.weathercvirn.repository.NotificationRepository
 import com.cvirn.weathercvirn.repository.WeatherRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
