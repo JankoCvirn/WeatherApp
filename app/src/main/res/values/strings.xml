@@ -10,7 +10,7 @@
     <string name="current_location_placeholder">Current location : %1$s!</string>
     <string name="current_location_weather_placeholder">Weather is %1$s , %2$s</string>
     <string name="current_location_details_placeholder">Current temperature is %1$s , daily minimum is %2$s with max temperature of %3$s. Pressure is %4$s and humidity %5$s. Wind speed is %6$s.</string>
-    <string name="city_name">city name</string>
+    <string name="city_name">enter city name</string>
     <string name="search_location_placeholder">Your search : %1$s!</string>
     <string name="enable_location_provider">Please enable location provider!</string>
     <string name="enable_internet_connection">Please enable internet!</string>

@@ -47,8 +47,11 @@ fun Activity.hideKeyboard() {
 
 @SuppressLint("SimpleDateFormat")
 @RequiresApi(Build.VERSION_CODES.N)
-fun Int.getDate() :String {
+fun Int.getDate(): String {
     val timestampString = this.toLong()
     return SimpleDateFormat("dd/MM/yyyy").format(Date(timestampString * 1000))
 }
 
+fun Int.isBadWeather(): Boolean {
+    return this < 800
+}

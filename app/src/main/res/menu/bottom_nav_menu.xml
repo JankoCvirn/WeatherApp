@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/icons8_location_48"
         android:title="@string/nav_home" />
 
     <item
         android:id="@+id/navigation_city"
-        android:icon="@drawable/ic_icons8_power_bi"
+        android:icon="@drawable/icons8_cityscape_64"
         android:title="@string/nav_city" />
 
     <item
         android:id="@+id/navigation_city_forecast"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/icons8_weather_forecast_66"
         android:title="@string/nav_city_forecast" />
 
 </menu>
