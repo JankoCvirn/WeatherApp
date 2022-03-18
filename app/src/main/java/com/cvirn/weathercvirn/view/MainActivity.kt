@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -47,6 +46,15 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.errorObservable.observe(this) {
+            if (it) {
+                toast(getString(R.string.generic_error_message))
+            }
+        }
     }
 
     override fun onResume() {

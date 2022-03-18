@@ -28,7 +28,7 @@ class CityWeatherFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = CityWeatherFragmentBinding.inflate(inflater, null, false)
         return binding.root
     }
@@ -62,10 +62,18 @@ class CityWeatherFragment : Fragment() {
                 it.peekContent().locationForecast?.main?.humidity.toString(),
                 it.peekContent().locationForecast?.wind?.speed.toString()
             )
+
         }
         viewModel.progressObservable.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it ?: false
         }
+
+        viewModel.citySearchErrorObservable.observe(viewLifecycleOwner) {
+            if (it) {
+                requireActivity().toast(getString(R.string.city_not_found_error))
+            }
+        }
+
     }
 
     private fun setupListener() {

@@ -32,9 +32,9 @@ data class CityForecastResponse(
         @SerializedName("moonset")
         val moonset: Int?,
         @SerializedName("pop")
-        val pop: Int?,
+        val pop: Double?,
         @SerializedName("pressure")
-        val pressure: Int?,
+        val pressure: Double?,
         @SerializedName("rain")
         val rain: Double?,
         @SerializedName("sunrise")
@@ -44,7 +44,7 @@ data class CityForecastResponse(
         @SerializedName("temp")
         val temp: Temp?,
         @SerializedName("uvi")
-        val uvi: Int?,
+        val uvi: Double?,
         @SerializedName("weather")
         val weather: List<Weather?>?,
         @SerializedName("wind_deg")

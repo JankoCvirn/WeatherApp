@@ -14,4 +14,7 @@
     <string name="search_location_placeholder">Your search : %1$s!</string>
     <string name="enable_location_provider">Please enable location provider!</string>
     <string name="enable_internet_connection">Please enable internet!</string>
+    <string name="daily_forecast_placeholder">Daily forecast for : %1$s!</string>
+    <string name="generic_error_message">Ooops there has been an error!</string>
+    <string name="city_not_found_error">City not found!Please try again.</string>
 </resources>

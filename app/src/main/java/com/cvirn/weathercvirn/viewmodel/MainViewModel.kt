@@ -22,14 +22,17 @@ class MainViewModel(
     private val _cityWeatherObservable = MutableLiveData<Event<WeatherForecast>>()
     val cityWeatherObservable: LiveData<Event<WeatherForecast>> = _cityWeatherObservable
 
-    private val _cityDailyWeatherObservable = MutableLiveData<Event<CityForecastData>>()
-    val cityDailyWeatherObservable: LiveData<Event<CityForecastData>> = _cityDailyWeatherObservable
+    private val _cityDailyWeatherObservable = MutableLiveData<CityForecastData>()
+    val cityDailyWeatherObservable: LiveData<CityForecastData> = _cityDailyWeatherObservable
 
     private val _progressObservable = MutableLiveData<Boolean>()
     val progressObservable: LiveData<Boolean> = _progressObservable
 
     private val _errorObservable = MutableLiveData<Boolean>()
     val errorObservable: LiveData<Boolean> = _errorObservable
+
+    private val _citySearchErrorObservable = MutableLiveData<Boolean>()
+    val citySearchErrorObservable: LiveData<Boolean> = _citySearchErrorObservable
 
     private val handler = CoroutineExceptionHandler { _, _ ->
         _errorObservable.postValue(true)
@@ -81,12 +84,12 @@ class MainViewModel(
                             lat = weatherForecast.locationForecast?.coord?.lat ?: 0.0,
                             lon = weatherForecast.locationForecast?.coord?.lon ?: 0.0,
                             appId = BuildConfig.API_KEY,
-                            name = cityQuery.city,
+                            name = weatherForecast.locationForecast?.name ?: "",
                             exclude = "hourly,minutely,current"
                         )
                     )
                 } else {
-                    _errorObservable.value = true
+                    _citySearchErrorObservable.value = true
                 }
             }
         }
@@ -98,7 +101,7 @@ class MainViewModel(
                 weatherRepository.getCityDailyWeatherForecast(dailyCityQuery)
             withContext(ViewModelDispatcher.uiDispatcher) {
                 if (cityDailyWeatherForecast.isSuccess) {
-                    _cityDailyWeatherObservable.value = Event(cityDailyWeatherForecast)
+                    _cityDailyWeatherObservable.value = cityDailyWeatherForecast
                 } else {
                     _errorObservable.value = true
                 }

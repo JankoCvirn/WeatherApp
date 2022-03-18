@@ -6,7 +6,7 @@ data class CityForecastData(
 ) {
     data class CityForecast(
 
-        val daily: List<Daily?>?,
+        val daily: List<Daily>?,
         val name: String?,
         val timezone: String?,
         val timezoneOffset: Int?
@@ -30,8 +30,8 @@ data class CityForecastData(
             val dt: Int?,
             val humidity: Int?,
 
-            val pop: Int?,
-            val pressure: Int?,
+            val pop: Double?,
+            val pressure: Double?,
             val rain: Double?,
 
             val windDeg: Int?,

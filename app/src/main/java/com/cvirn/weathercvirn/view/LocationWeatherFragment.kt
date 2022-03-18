@@ -21,7 +21,7 @@ class LocationWeatherFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = LocationWeatherFragmentBinding.inflate(inflater, null, false)
         return binding.root
     }
@@ -53,7 +53,8 @@ class LocationWeatherFragment : Fragment() {
                 it.peekContent().locationForecast?.main?.tempMax.toString(),
                 it.peekContent().locationForecast?.main?.pressure.toString(),
                 it.peekContent().locationForecast?.main?.humidity.toString(),
-                it.peekContent().locationForecast?.wind?.speed.toString())
+                it.peekContent().locationForecast?.wind?.speed.toString()
+            )
 
         }
     }
