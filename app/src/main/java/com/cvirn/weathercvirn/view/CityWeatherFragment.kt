@@ -12,6 +12,9 @@ import com.cvirn.weathercvirn.BuildConfig
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.CityWeatherFragmentBinding
 import com.cvirn.weathercvirn.model.CityQuery
+import com.cvirn.weathercvirn.utils.hideKeyboard
+import com.cvirn.weathercvirn.utils.isInternetAvailable
+import com.cvirn.weathercvirn.utils.toast
 import com.cvirn.weathercvirn.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -68,16 +71,20 @@ class CityWeatherFragment : Fragment() {
     private fun setupListener() {
         binding.etxtSearch.setOnEditorActionListener { view, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.getCityWeather(
-                    CityQuery(
-                        city = view.editableText.toString(),
-                        appId = BuildConfig.API_KEY,
-                        units = "metric"
+                requireActivity().hideKeyboard()
+                if (!requireContext().isInternetAvailable()) {
+                    requireActivity().toast(getString(R.string.enable_internet_connection))
+                } else {
+                    viewModel.getCityWeather(
+                        CityQuery(
+                            city = view.editableText.toString(),
+                            appId = BuildConfig.API_KEY,
+                            units = "metric"
+                        )
                     )
-                )
+                }
                 true
             } else false
         }
     }
 }
-

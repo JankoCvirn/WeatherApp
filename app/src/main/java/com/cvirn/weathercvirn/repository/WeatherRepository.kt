@@ -1,9 +1,8 @@
 package com.cvirn.weathercvirn.repository
 
 import com.cvirn.weathercvirn.client.APIClient
-import com.cvirn.weathercvirn.model.CityQuery
-import com.cvirn.weathercvirn.model.CurrentLocation
-import com.cvirn.weathercvirn.model.WeatherForecast
+import com.cvirn.weathercvirn.model.*
+import com.cvirn.weathercvirn.response.CityForecastResponse
 import com.cvirn.weathercvirn.response.WeatherResponse
 
 class WeatherRepository {
@@ -47,4 +46,21 @@ class WeatherRepository {
         }
     }
 
+    suspend fun getCityDailyWeatherForecast(dailyCityForecast: DailyCityQuery): CityForecastData {
+        val result = apiServices.requestCityDailyWeatherForecast(
+            lat = dailyCityForecast.lat,
+            lon = dailyCityForecast.lon,
+            exclude = dailyCityForecast.exclude,
+            appId = dailyCityForecast.appId
+        )
+
+        return if (result.isSuccessful && result.body() != null) {
+            mapCityForecastResponse(result.body() as CityForecastResponse, dailyCityForecast.name)
+        } else {
+            CityForecastData(
+                cityForecast = null,
+                isSuccess = false
+            )
+        }
+    }
 }

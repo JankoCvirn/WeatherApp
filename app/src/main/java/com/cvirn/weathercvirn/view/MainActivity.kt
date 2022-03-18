@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,13 +15,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.cvirn.weathercvirn.BuildConfig
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.ActivityMainBinding
-import com.cvirn.weathercvirn.utils.allPermissionsGranted
-import com.cvirn.weathercvirn.utils.requestPermissions
+import com.cvirn.weathercvirn.utils.*
 import com.cvirn.weathercvirn.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,11 +51,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        checkRequirements()
         permissionsCheck()
     }
 
+    private fun checkRequirements() {
+        if (!isLocationProviderEnabled()) {
+            this.toast(getString(R.string.enable_location_provider))
+        }
+        if (!isInternetAvailable()) {
+            this.toast(getString(R.string.enable_internet_connection))
+        }
+    }
+
     private fun permissionsCheck() {
-        //TODO check if location is turned on
+
         if (this.allPermissionsGranted()) {
             viewModel.getLastLocation(units = "metric")
         } else {

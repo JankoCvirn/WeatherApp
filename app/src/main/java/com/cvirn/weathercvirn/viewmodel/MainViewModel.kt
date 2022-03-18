@@ -3,13 +3,13 @@ package com.cvirn.weathercvirn.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cvirn.weathercvirn.BuildConfig
-import com.cvirn.weathercvirn.model.CityQuery
-import com.cvirn.weathercvirn.model.CurrentLocation
-import com.cvirn.weathercvirn.model.Event
-import com.cvirn.weathercvirn.model.WeatherForecast
+import com.cvirn.weathercvirn.model.*
 import com.cvirn.weathercvirn.repository.LocationRepository
 import com.cvirn.weathercvirn.repository.WeatherRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(
     private val weatherRepository: WeatherRepository,
@@ -21,6 +21,9 @@ class MainViewModel(
 
     private val _cityWeatherObservable = MutableLiveData<Event<WeatherForecast>>()
     val cityWeatherObservable: LiveData<Event<WeatherForecast>> = _cityWeatherObservable
+
+    private val _cityDailyWeatherObservable = MutableLiveData<Event<CityForecastData>>()
+    val cityDailyWeatherObservable: LiveData<Event<CityForecastData>> = _cityDailyWeatherObservable
 
     private val _progressObservable = MutableLiveData<Boolean>()
     val progressObservable: LiveData<Boolean> = _progressObservable
@@ -73,6 +76,29 @@ class MainViewModel(
                 _progressObservable.value = false
                 if (weatherForecast.isSuccess) {
                     _cityWeatherObservable.value = Event(weatherForecast)
+                    getCityWeatherForecast(
+                        DailyCityQuery(
+                            lat = weatherForecast.locationForecast?.coord?.lat ?: 0.0,
+                            lon = weatherForecast.locationForecast?.coord?.lon ?: 0.0,
+                            appId = BuildConfig.API_KEY,
+                            name = cityQuery.city,
+                            exclude = "hourly,minutely,current"
+                        )
+                    )
+                } else {
+                    _errorObservable.value = true
+                }
+            }
+        }
+    }
+
+    private fun getCityWeatherForecast(dailyCityQuery: DailyCityQuery) {
+        scope.launch(handler) {
+            val cityDailyWeatherForecast =
+                weatherRepository.getCityDailyWeatherForecast(dailyCityQuery)
+            withContext(ViewModelDispatcher.uiDispatcher) {
+                if (cityDailyWeatherForecast.isSuccess) {
+                    _cityDailyWeatherObservable.value = Event(cityDailyWeatherForecast)
                 } else {
                     _errorObservable.value = true
                 }

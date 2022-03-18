@@ -1,6 +1,8 @@
 package com.cvirn.weathercvirn.repository
 
+import com.cvirn.weathercvirn.model.CityForecastData
 import com.cvirn.weathercvirn.model.WeatherForecast
+import com.cvirn.weathercvirn.response.CityForecastResponse
 import com.cvirn.weathercvirn.response.WeatherResponse
 
 fun mapWeatherResponse(weatherResponse: WeatherResponse): WeatherForecast {
@@ -48,4 +50,55 @@ fun mapWeatherResponse(weatherResponse: WeatherResponse): WeatherForecast {
             )
         )
     )
+}
+
+fun mapCityForecastResponse(
+    cityForecastResponse: CityForecastResponse,
+    name: String
+): CityForecastData {
+
+    val dailyList = mapDailyList(cityForecastResponse.daily)
+
+    return CityForecastData(
+        isSuccess = true,
+        cityForecast = CityForecastData.CityForecast(
+            name = name,
+            timezone = cityForecastResponse.timezone,
+            timezoneOffset = cityForecastResponse.timezoneOffset,
+            daily = dailyList
+        )
+    )
+}
+
+private fun mapDailyList(list: List<CityForecastResponse.Daily?>?): List<CityForecastData.CityForecast.Daily> {
+    val daily = mutableListOf<CityForecastData.CityForecast.Daily>()
+    list?.let { list1 ->
+        list1.forEach {
+            daily.add(
+                CityForecastData.CityForecast.Daily(
+                    descriptionWeather = it?.weather?.first()?.description,
+                    clouds = it?.clouds,
+                    mainWeather = it?.weather?.first()?.main,
+                    icon = it?.weather?.first()?.icon,
+                    maxTemp = it?.temp?.max,
+                    minTemp = it?.temp?.min,
+                    mornTemp = it?.temp?.morn,
+                    dayTemp = it?.temp?.day,
+                    eveTemp = it?.temp?.eve,
+                    id = it?.weather?.first()?.id,
+                    nightTemp = it?.temp?.night,
+                    dewPoint = it?.dewPoint,
+                    dt = it?.dt,
+                    pressure = it?.pressure,
+                    humidity = it?.humidity,
+                    pop = it?.pop,
+                    rain = it?.rain,
+                    windDeg = it?.windDeg,
+                    windGust = it?.windGust,
+                    windSpeed = it?.windSpeed
+                )
+            )
+        }
+    }
+    return daily.toList()
 }
