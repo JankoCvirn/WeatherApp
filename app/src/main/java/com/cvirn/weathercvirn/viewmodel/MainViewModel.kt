@@ -2,11 +2,13 @@ package com.cvirn.weathercvirn.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import com.cvirn.weathercvirn.BuildConfig
 import com.cvirn.weathercvirn.model.*
+import com.cvirn.weathercvirn.repository.DataStoreRepository
 import com.cvirn.weathercvirn.repository.LocationRepository
-import com.cvirn.weathercvirn.repository.NotificationRepository
 import com.cvirn.weathercvirn.repository.WeatherRepository
+import com.cvirn.weathercvirn.utils.prepareCache
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -14,7 +16,8 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel(
     private val weatherRepository: WeatherRepository,
-    private val locationRepository: LocationRepository
+    private val locationRepository: LocationRepository,
+    private val dataStoreRepository: DataStoreRepository
 ) : BaseViewModel() {
 
     private val _forecastObservable = MutableLiveData<Event<WeatherForecast>>()
@@ -35,6 +38,9 @@ class MainViewModel(
     private val _citySearchErrorObservable = MutableLiveData<Boolean>()
     val citySearchErrorObservable: LiveData<Boolean> = _citySearchErrorObservable
 
+    val cachedForecast: LiveData<WeatherForecast?> =
+        dataStoreRepository.getCachedForecast.asLiveData()
+
     private val handler = CoroutineExceptionHandler { _, _ ->
         _errorObservable.postValue(true)
     }
@@ -46,6 +52,7 @@ class MainViewModel(
             withContext(ViewModelDispatcher.uiDispatcher) {
                 _progressObservable.value = false
                 if (weatherForecast.isSuccess) {
+                    storeForecastInCache(weatherForecast)
                     _forecastObservable.value = Event(weatherForecast)
                 } else {
                     _errorObservable.value = true
@@ -54,26 +61,37 @@ class MainViewModel(
         }
     }
 
+    private fun storeLocation(currentLocation: CurrentLocation) {
+        dataStoreRepository.setLocation(
+            lat = currentLocation.lat,
+            lon = currentLocation.lon
+        )
+    }
+
+    private fun storeForecastInCache(weatherForecast: WeatherForecast) {
+        val cached = weatherForecast.prepareCache()
+        dataStoreRepository.setCachedForecast(cached)
+    }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getLastLocation(units: String) {
         scope.launch(handler) {
             locationRepository.lastLocationFlow().collect { location ->
                 withContext(ViewModelDispatcher.uiDispatcher) {
-                    queryCurrentLocationForecast(
-                        CurrentLocation(
-                            lat = location.latitude,
-                            lon = location.longitude,
-                            appId = BuildConfig.API_KEY,
-                            units = units
-                        )
+                    val currentLocation = CurrentLocation(
+                        lat = location.latitude,
+                        lon = location.longitude,
+                        appId = BuildConfig.API_KEY,
+                        units = units
                     )
+                    storeLocation(currentLocation)
+                    queryCurrentLocationForecast(currentLocation)
                 }
             }
         }
     }
 
     fun getCityWeather(cityQuery: CityQuery) {
-        _progressObservable.value = true
         scope.launch(handler) {
             val weatherForecast = weatherRepository.getCityWeatherForecast(cityQuery)
             withContext(ViewModelDispatcher.uiDispatcher) {

@@ -11,6 +11,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.cvirn.weathercvirn.model.WeatherForecast
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -62,4 +64,14 @@ fun getTimestampId(): Long {
 
 fun String.buildIconUrl(): String {
     return "https://openweathermap.org/img/wn/$this.png"
+}
+
+fun WeatherForecast.prepareCache(): String {
+    return Gson().toJson(
+        this
+    )
+}
+
+fun String.unCacheWeatherForecast(): WeatherForecast {
+    return Gson().fromJson(this, WeatherForecast::class.java)
 }

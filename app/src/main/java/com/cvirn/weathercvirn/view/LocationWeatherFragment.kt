@@ -57,5 +57,27 @@ class LocationWeatherFragment : Fragment() {
                 it.peekContent().locationForecast?.wind?.speed.toString()
             )
         }
+        viewModel.cachedForecast.observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = false
+            binding.txtLocationName.text = getString(
+                R.string.current_location_placeholder,
+                it?.locationForecast?.name
+            )
+            binding.imgIcon.load(it?.locationForecast?.weather?.icon?.buildIconUrl())
+            binding.txtLocationWeather.text = getString(
+                R.string.current_location_weather_placeholder,
+                it?.locationForecast?.weather?.main,
+                it?.locationForecast?.weather?.description
+            )
+            binding.txtLocationDetails.text = getString(
+                R.string.current_location_details_placeholder,
+                it?.locationForecast?.main?.temp.toString(),
+                it?.locationForecast?.main?.tempMin.toString(),
+                it?.locationForecast?.main?.tempMax.toString(),
+                it?.locationForecast?.main?.pressure.toString(),
+                it?.locationForecast?.main?.humidity.toString(),
+                it?.locationForecast?.wind?.speed.toString()
+            )
+        }
     }
 }

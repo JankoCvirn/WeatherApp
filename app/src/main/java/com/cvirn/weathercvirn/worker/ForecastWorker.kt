@@ -14,6 +14,7 @@ class ForecastWorker(
 
     private val weatherRepository: WeatherRepository by inject()
     override suspend fun doWork(): Result {
-        TODO("Not yet implemented")
+        //TODO add call
+        return Result.success()
     }
 }
