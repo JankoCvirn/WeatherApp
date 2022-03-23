@@ -15,6 +15,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.cvirn.weathercvirn.BuildConfig
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.ActivityMainBinding
@@ -24,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {

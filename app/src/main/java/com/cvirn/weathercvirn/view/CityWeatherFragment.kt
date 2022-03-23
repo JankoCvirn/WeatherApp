@@ -12,6 +12,7 @@ import com.cvirn.weathercvirn.BuildConfig
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.CityWeatherFragmentBinding
 import com.cvirn.weathercvirn.model.CityQuery
+import com.cvirn.weathercvirn.utils.buildIconUrl
 import com.cvirn.weathercvirn.utils.hideKeyboard
 import com.cvirn.weathercvirn.utils.isInternetAvailable
 import com.cvirn.weathercvirn.utils.toast
@@ -47,7 +48,7 @@ class CityWeatherFragment : Fragment() {
                 R.string.search_location_placeholder,
                 it.peekContent().locationForecast?.name
             )
-            binding.imgIcon.load("https://openweathermap.org/img/wn/${it.peekContent().locationForecast?.weather?.icon}.png")
+            binding.imgIcon.load(it.peekContent().locationForecast?.weather?.icon?.buildIconUrl())
             binding.txtLocationWeather.text = getString(
                 R.string.current_location_weather_placeholder,
                 it.peekContent().locationForecast?.weather?.main,

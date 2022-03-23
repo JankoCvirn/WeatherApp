@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import coil.load
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.LocationWeatherFragmentBinding
-import com.cvirn.weathercvirn.utils.getTimestampId
+import com.cvirn.weathercvirn.utils.buildIconUrl
 import com.cvirn.weathercvirn.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -34,7 +32,6 @@ class LocationWeatherFragment : Fragment() {
         observeViewModel()
     }
 
-
     private fun observeViewModel() {
         viewModel.progressObservable.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it ?: false
@@ -44,7 +41,7 @@ class LocationWeatherFragment : Fragment() {
                 R.string.current_location_placeholder,
                 it.peekContent().locationForecast?.name
             )
-            binding.imgIcon.load("https://openweathermap.org/img/wn/${it.peekContent().locationForecast?.weather?.icon}.png")
+            binding.imgIcon.load(it.peekContent().locationForecast?.weather?.icon?.buildIconUrl())
             binding.txtLocationWeather.text = getString(
                 R.string.current_location_weather_placeholder,
                 it.peekContent().locationForecast?.weather?.main,

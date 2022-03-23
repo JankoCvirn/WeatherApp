@@ -56,6 +56,10 @@ fun Int.isBadWeather(): Boolean {
     return this < 800
 }
 
-fun getTimestampId() : Long {
+fun getTimestampId(): Long {
     return System.currentTimeMillis() / 1000
+}
+
+fun String.buildIconUrl(): String {
+    return "https://openweathermap.org/img/wn/$this.png"
 }

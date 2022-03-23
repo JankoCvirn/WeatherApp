@@ -33,7 +33,6 @@ class CityForecastFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.cityDailyWeatherObservable.observe(viewLifecycleOwner) { event ->
-            val test = event
             event.cityForecast?.let {
                 binding.txtLocationName.text =
                     getString(R.string.daily_forecast_placeholder, it.name)
@@ -43,8 +42,6 @@ class CityForecastFragment : Fragment() {
     }
 
     private fun populateData(daily: List<CityForecastData.CityForecast.Daily>?) {
-
-        val test = daily
         val adapter = DailyItemAdapter()
         daily?.let {
             adapter.setData(it)

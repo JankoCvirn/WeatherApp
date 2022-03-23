@@ -10,6 +10,7 @@ import coil.load
 import com.cvirn.weathercvirn.R
 import com.cvirn.weathercvirn.databinding.CityWeatherItemBinding
 import com.cvirn.weathercvirn.model.CityForecastData
+import com.cvirn.weathercvirn.utils.buildIconUrl
 import com.cvirn.weathercvirn.utils.getDate
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -46,7 +47,7 @@ class DailyItemAdapter : RecyclerView.Adapter<DailyItemAdapter.ForecastViewHolde
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 binding.txtDate.text = item.dt?.getDate()
             }
-            binding.imgIcon.load("https://openweathermap.org/img/wn/${item.icon}.png")
+            binding.imgIcon.load(item.icon?.buildIconUrl())
             binding.txtLocationWeather.text = context.getString(
                 R.string.current_location_weather_placeholder,
                 item.mainWeather,
