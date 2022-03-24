@@ -16,7 +16,6 @@ import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 fun Context.toast(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 

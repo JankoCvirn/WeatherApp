@@ -26,7 +26,7 @@ interface APIServices {
         @Query("units") units: String
     ): Response<WeatherResponse>
 
-    //https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely,current&appid=befc2ae04c280e5d3b798259c1003c76
+    // https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely,current&appid=befc2ae04c280e5d3b798259c1003c76
     @Headers("Accept: application/json")
     @GET("/data/2.5/onecall")
     suspend fun requestCityDailyWeatherForecast(

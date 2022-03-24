@@ -50,7 +50,8 @@ data class WeatherForecast(
         data class Weather(
             val description: String?,
             val icon: String?,
-            val main: String?
+            val main: String?,
+            val id: Int?
         )
 
         data class Wind(

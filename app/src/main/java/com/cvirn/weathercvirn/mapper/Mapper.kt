@@ -35,7 +35,8 @@ fun mapWeatherResponse(weatherResponse: WeatherResponse): WeatherForecast {
             weather = WeatherForecast.LocationForecast.Weather(
                 description = weatherResponse.weather?.first()?.description,
                 icon = weatherResponse.weather?.first()?.icon,
-                main = weatherResponse.weather?.first()?.main
+                main = weatherResponse.weather?.first()?.main,
+                id = weatherResponse.weather?.first()?.id
             ),
             sys = WeatherForecast.LocationForecast.Sys(
                 sunrise = weatherResponse.sys?.sunrise,

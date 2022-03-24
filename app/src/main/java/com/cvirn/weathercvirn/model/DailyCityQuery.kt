@@ -6,5 +6,5 @@ data class DailyCityQuery(
     val lon: Double,
     val appId: String,
     val exclude: String,
-    val name:String
+    val name: String
 )

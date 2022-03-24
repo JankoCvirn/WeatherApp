@@ -19,4 +19,6 @@
     <string name="city_not_found_error">City not found!Please try again.</string>
     <string name="channel_name">Weather Alert</string>
     <string name="channel_description">Alert for bad weather</string>
+    <string name="danger">Alert</string>
+    <string name="receive_weather_alert">Receive weather alert?</string>
 </resources>

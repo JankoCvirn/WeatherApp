@@ -19,7 +19,6 @@ import com.cvirn.weathercvirn.utils.toast
 import com.cvirn.weathercvirn.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-
 class CityWeatherFragment : Fragment() {
 
     private lateinit var binding: CityWeatherFragmentBinding
@@ -63,7 +62,6 @@ class CityWeatherFragment : Fragment() {
                 it.peekContent().locationForecast?.main?.humidity.toString(),
                 it.peekContent().locationForecast?.wind?.speed.toString()
             )
-
         }
         viewModel.progressObservable.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it ?: false
@@ -74,7 +72,6 @@ class CityWeatherFragment : Fragment() {
                 requireActivity().toast(getString(R.string.city_not_found_error))
             }
         }
-
     }
 
     private fun setupListener() {

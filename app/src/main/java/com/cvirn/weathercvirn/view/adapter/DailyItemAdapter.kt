@@ -15,7 +15,8 @@ import com.cvirn.weathercvirn.utils.getDate
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class DailyItemAdapter : RecyclerView.Adapter<DailyItemAdapter.ForecastViewHolder>(),
+class DailyItemAdapter :
+    RecyclerView.Adapter<DailyItemAdapter.ForecastViewHolder>(),
     KoinComponent {
 
     private val items = arrayListOf<CityForecastData.CityForecast.Daily>()
